@@ -20,8 +20,9 @@ worker:
     - rabbitmq:rabbitmq
   volumes:
     - "./log/worker:/var/log/simpleci"
-    - "./data/worker/cache:/home/simpleci/worker/app/cache"
+    - "./data/worker/cache:/var/cache/simpleci"
     - "/var/run/docker.sock:/var/run/docker.sock"
+    - "/usr/bin/docker:/usr/bin/docker"
   env_file: parameters.env
 
 frontend:
@@ -29,11 +30,10 @@ frontend:
   links:
     - mysql:mysql
     - rabbitmq:rabbitmq
+    - redis:redis
   ports:
    - "8082:80"
   volumes:
     - "./log/frontend:/var/log/simpleci"
     - "./log/frontend/app:/home/simpleci/frontend/app/logs"
   env_file: parameters.env
-
-
