@@ -14,22 +14,25 @@ redis:
   volumes:
     - "./data/redis:/var/lib/redis"
 
+dispatcher:
+  image: simpleci/dispatcher
+  links:
+    - mysql:mysql
+    - redis:redis
+  env_file: parameters.env
+
 worker:
-  image: quay.io/simpleci/worker:latest
+  image: simpleci/worker
   links:
     - rabbitmq:rabbitmq
   volumes:
-    - "./log/worker:/var/log/simpleci"
-    - "./data/worker/cache:/var/cache/simpleci"
     - "/var/run/docker.sock:/var/run/docker.sock"
-    - "/usr/bin/docker:/usr/bin/docker"
   env_file: parameters.env
 
 frontend:
-  image: quay.io/simpleci/frontend:latest
+  image: simpleci/frontend
   links:
     - mysql:mysql
-    - rabbitmq:rabbitmq
     - redis:redis
   ports:
    - "8082:80"
