@@ -1,27 +1,27 @@
 # SimpleCI
 
 
-SimpleCI - Система непрерывной интеграции, основанная на Docker. Основные особенности системы:
-- Установка на собственный сервер
-- Использование внешних провайдеров (GCE) для запуска неограниченного числа параллельных тестов
-- Кэш тестов
-- Вывод лога билда в реальном времени
-- Использование собственных [образов для тестирования](https://github.com/simpleci/simpleci/wiki/Testing-Images)
-- Конвейер задач - позволяет разделить билд на набор задач, каждая из которых может выполняться параллельно.
-- Создание билдов автоматически (при push-е в репозиторий) и вручную из интерфейса
+SimpleCI - Self-hosted docker-based continuous integration system. Killer features:
+- Self-hosted
+- External providers (GCE) for running a unlimited parallel tasks
+- Build cache
+- Real-time build log displaying
+- Custom [build images](https://github.com/simpleci/simpleci/wiki/Testing-Images)
+- Build task pipeline to split build on set of parallel running jobs.
+- Automatically and manual (in web-interface) build creating
 
-# Помощь проекту
-Проект будет рад любой помощи, в том числе:
-- пожеланиям и предложениям
-- тестированию на разных проектах с разными языками
-- создание [образов для тестирования](https://github.com/simpleci/simpleci/wiki/Testing-Images)
-- написанию документации
-- реализации пунктов [todo-листа](https://github.com/simpleci/simpleci/wiki/Todo)
+# Contributing
+SimpleCI is a open-source project. Things that you can do to help the project:
+- Comments ans suggestions
+- Testing SimpleCI at work with different projects and programming languages
+- Creating a  [build images](https://github.com/simpleci/simpleci/wiki/Testing-Images)
+- Writing a documentation
+- Implementing [todo-list](https://github.com/simpleci/simpleci/wiki/Todo) features.
 
-# Документация
+# Documentation
 
-- [Установка](https://github.com/simpleci/simpleci/wiki/Install)
-- [Использование](https://github.com/simpleci/simpleci/wiki/Config)   
-- [Архитектура](https://github.com/simpleci/simpleci/wiki/Architecture)
+- [Installation](https://github.com/simpleci/simpleci/wiki/Install)
+- [Usage](https://github.com/simpleci/simpleci/wiki/Config)   
+- [System architecture](https://github.com/simpleci/simpleci/wiki/Architecture)
 
 
