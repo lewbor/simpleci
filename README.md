@@ -25,5 +25,3 @@ SimpleCI - Система непрерывной интеграции, осно�
 - [Архитектура](https://github.com/simpleci/simpleci/wiki/Architecture)
 
 
-
-
