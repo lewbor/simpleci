@@ -22,14 +22,6 @@ dispatcher:
     - redis:redis
   env_file: parameters.env
 
-worker:
-  image: simpleci/worker
-  links:
-    - rabbitmq:rabbitmq
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock"
-  env_file: parameters.env
-
 frontend:
   image: simpleci/frontend
   links:
