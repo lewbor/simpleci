@@ -31,5 +31,4 @@ frontend:
    - "8080:80"
   volumes:
     - "./log/frontend:/var/log/simpleci"
-    - "./log/frontend/app:/var/www/var/logs"
   env_file: parameters.env

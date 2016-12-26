@@ -19,6 +19,7 @@ dispatcher:
   image: simpleci/dispatcher
   links:
     - mysql:mysql
+    - rabbitmq:rabbitmq
     - redis:redis
   env_file: parameters.env
 
@@ -34,10 +35,10 @@ frontend:
   image: simpleci/frontend
   links:
     - mysql:mysql
+    - rabbitmq:rabbitmq
     - redis:redis
   ports:
    - "8080:80"
   volumes:
     - "./log/frontend:/var/log/simpleci"
-    - "./log/frontend/app:/var/www/var/logs"
   env_file: parameters.env
