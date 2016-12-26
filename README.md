@@ -1,5 +1,10 @@
 # SimpleCI
 
+[![Build Status](https://travis-ci.org/simpleci/frontend.svg?branch=master)](https://travis-ci.org/simpleci/frontend)
+
+![Dashboard](/docs/screenshots/dashboard.png?raw=true "Dashboard")
+
+[More screenshots](https://github.com/simpleci/simpleci/wiki/Screenshots)
 
 SimpleCI - Self-hosted docker-based continuous integration system. Killer features:
 - Self-hosted
