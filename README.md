@@ -6,12 +6,11 @@
 
 [More screenshots](https://github.com/simpleci/simpleci/wiki/Screenshots)
 
-SimpleCI - Self-hosted docker-based continuous integration system. Killer features:
+SimpleCI - Self-hosted docker-based continuous integration system. Main features:
 - Self-hosted
-- Highly customizable
-- External providers (GCE) for running a unlimited parallel tasks
-- Build cache
-- Real-time build log displaying
+- [External providers](https://github.com/simpleci/simpleci/wiki/Providers) for running a unlimited number of parallel tasks
+- [Build cache](https://github.com/simpleci/simpleci/wiki/Cache)
+- Real-time build log displaying (using websockets)
 - Custom [build images](https://github.com/simpleci/simpleci/wiki/Testing-Images)
 - Build task pipeline like gitlab ci to split build on set of parallel running jobs.
 - Automatically and manual (in web-interface) build creating
