@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+set -e
+set -o verbose
+
+php --version
 
 composer install --no-interaction --no-progress
 bin/console assets:install
