@@ -1,0 +1,46 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block title %}
+    Create gitlab project
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li>Settings</li>
+        <li><a href="{{ path('settings.project.list') }}">Projects</a></li>
+        <li class="active">Create gitlab project</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    {% embed 'core/box.html.twig' %}
+        {% block title %}New gitlab project{% endblock %}
+        {% block body %}
+
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            {{ form_row(form.project_identity, {'label':'Project identity'}) }}
+            {{ form_row(form.repository_url, {'label': 'Repository url'}) }}
+            {{ form_row(form.name, {'label':'Project name'}) }}
+            {{ form_row(form.description, {'label': 'Project description'}) }}
+
+            <hr/>
+            {{ form_row(form.sshKey) }}
+            {{ form_row(form.cache) }}
+            {{ form_row(form.provider) }}
+            {{ form_row(form.add_deploy_key, {'label': 'Add ssh deploy key to project'}) }}
+
+
+            {{ form_rest(form) }}
+            <button type="submit" class="btn btn-default">Create</button>
+            <a href="{{ path('settings.project.list') }}" class="btn btn-default">Cancel</a>
+            {{ form_end(form) }}
+            {{ form_end(form) }}
+
+        {% endblock %}
+    {% endembed %}
+
+
+
+{% endblock %}

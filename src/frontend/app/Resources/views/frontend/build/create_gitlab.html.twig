@@ -1,0 +1,38 @@
+{% extends 'layout/index.html.twig' %}
+
+{% block title %}
+    New build - {{ project.name }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('project_view', {'id':project.id}) }}">{{ project.name }}</a>
+        </li>
+        <li class="active">New build</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+
+
+    {% embed 'core/box.html.twig' %}
+        {% block title %}Build{% endblock %}
+        {% block body %}
+            {% if form.vars['api_error_message'] is defined %}
+                <div class="alert alert-warning" style="margin-left: 0">
+                    Some error occurred during api call. But you still can fill build form. <br/>
+                    {{ form.vars['api_error_message'] }}
+                </div>
+            {% endif %}
+            {{ form_start(form) }}
+            {{ form_row(form.branch) }}
+            {{ form_row(form.commit) }}
+            <button type="submit" class="btn btn-default">Create</button>
+            <a href="{{ path('project_view', {'id': project.id}) }}" class="btn btn-default">Cancel</a>
+            {{ form_end(form) }}
+        {% endblock %}
+    {% endembed %}
+
+
+
+{% endblock %}

@@ -1,0 +1,164 @@
+{% extends 'layout/index.html.twig' %}
+
+{% block title %}
+    Job #{{ entity.build.number }}.{{ entity.number }} -
+    Build #{{ entity.build.number }} -
+    {{ entity.build.project.name }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('project_view', {'id':entity.build.project.id}) }}">{{ entity.build.project.name }}</a>
+        </li>
+        <li><a href="{{ path('build_view', {'id':entity.build.id}) }}">Build #{{ entity.build.number }}</a></li>
+        <li class="active">Job #{{ entity.build.number }}.{{ entity.number }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    {% set jobConfig = entity.config|json_decode %}
+
+    <div class="row">
+        <div class="col-md-8">
+
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#job_log" aria-controls="job_log" role="tab"
+                       data-toggle="tab">Log</a>
+                </li>
+                <li role="presentation">
+                    <a href="#job_config" aria-controls="job_config" role="tab" data-toggle="tab">Config</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="job_log">
+                    <div id="log" data-widget="job_log" data-job="{{ entity.id }}"
+                         data-status="{{ entity.status }}">
+
+                            <span class="follow_log">
+                                <label for="follow_log_checkbox">Follow log</label>
+                                <input type="checkbox" id="follow_log_checkbox" checked="checked">
+                            </span>
+
+                        <pre class="build_log"></pre>
+                    </div>
+
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="job_config">
+                    <div data-widget="code_formatter">{{ entity.config }}</div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-md-4">
+            {% embed 'core/box.html.twig' %}
+                {% block title %}Job info{% endblock %}
+                {% block body %}
+
+                    <table class="table" data-widget="project_action_listener"
+                           data-project="{{ entity.build.project.id }}">
+                        <tr>
+                            <th>Stage</th>
+                            <td>{{ entity.stage }}</td>
+                        </tr>
+                        <tr>
+                            <th>Image</th>
+                            <td>
+                                {% if jobConfig['container']['image'] is defined %}
+                                    {{ jobConfig['container']['image']['name'] }}:{{ jobConfig['container']['image']['tag'] }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Env</th>
+                            <td>
+                                {% if jobConfig['container']['environment'] is defined %}
+                                    {% for env in jobConfig['container']['environment'] %}
+                                        {{ env['name'] }}={{ env['value'] }} {% if not loop.last %}<br/>{% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Status</th>
+                            <td>
+                                <span class="build-status-label label label-{{ entity.status|bootstrap_build_class }}">
+                                {{ entity.status|translate_enum('AppBundle\\Model\\Type\\OperationStatus') }}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Time</th>
+                            <td>
+                                {% if entity.startedAt is not null %}
+                                    <i class="fa fa-clock-o" title="Job duration"></i>
+                                    {% if entity.endedAt is not null %}
+                                        {{ entity.endedAt|simple_time_diff(entity.startedAt) }} <br/>
+                                    {% else %}
+                                        <span data-widget="duration_clock"
+                                              data-started="{{ entity.startedAt.getTimestamp() }}"
+                                              data-current="{{ date().timestamp }}"></span>
+                                        <br/>
+                                    {% endif %}
+                                {% endif %}
+
+                                <i class="fa fa-calendar" title="Created at"></i>
+                                <span title="{{ entity.createdAt|date }}">{{ entity.createdAt|ago }}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Actions</th>
+                            <td>
+                                {% if entity.status == 'running' %}
+                                    <a href="" class="btn btn-primary" title="Stop job"
+                                       data-widget="job_stopper" data-job="{{ entity.id }}">Stop job</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+
+
+
+
+                {% endblock %}
+            {% endembed %}
+
+            {% embed 'core/box.html.twig' %}
+                {% block title %}Commit info{% endblock %}
+                {% block body %}
+                    <table class="table">
+                        <tr>
+                            <th>Commit</th>
+                            <td>{{ entity.build | build_commit_link }}</td>
+                        </tr>
+                        <tr>
+                            <th>Branch</th>
+                            <td>{{ entity.build | branch_link }}</td>
+                        </tr>
+                        <tr>
+                            <th>Author</th>
+                            <td>{{ entity.build.authorName }}</td>
+                        </tr>
+                        <tr>
+                            <th>E-mail</th>
+                            <td>{{ entity.build.authorEmail }}</td>
+                        </tr>
+                        <tr>
+                            <th>Message</th>
+                            <td>{{ entity.build.message }}</td>
+                        </tr>
+                    </table>
+                {% endblock %}
+            {% endembed %}
+
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,23 @@
+parameters:
+    database_driver: pdo_mysql
+    database_host: {{DATABASE_HOST}}
+    database_port: {{DATABASE_PORT}}
+    database_name: {{DATABASE_NAME}}
+    database_user: {{DATABASE_USER}}
+    database_password: {{DATABASE_PASSWORD}}
+
+    rabbitmq_host: {{RABBITMQ_HOST}}
+    rabbitmq_port: {{RABBITMQ_PORT}}
+    rabbitmq_user: {{RABBITMQ_USER}}
+    rabbitmq_password: {{RABBITMQ_PASSWORD}}
+
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+
+    hostname: {{APP_HOST}}
+    locale: {{APP_LOCALE}}
+    secret: {{SECRET}}
+    centrifugo_secret: {{SECRET}}
+

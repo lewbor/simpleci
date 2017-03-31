@@ -1,0 +1,43 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block title %}
+    Ssh key info
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li>Settings</li>
+        <li><a href="{{ path(controllerDescription.routes['list']) }}">Ssh keys</a></li>
+        <li class="active">{{ block('title') }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-7">
+
+            <div class="box box-primary" role="presentation">
+                <div class="box-header">
+                    <h3 class="box-title"></h3>
+                </div>
+                <div class="box-body">
+                    <table class="table" style="table-layout: fixed; width: 100%">
+                        <tr>
+                            <th style="width: 100px">Name</th>
+                            <td>{{ entity.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Created at</th>
+                            <td>{{ entity.createdAt|date }}</td>
+                        </tr>
+                        <tr>
+                            <th>Public key</th>
+                            <td style="word-wrap: break-word">{{ entity.publicKey }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

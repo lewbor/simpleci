@@ -1,0 +1,42 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block title %}
+    Create project
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li>Settings</li>
+        <li><a href="{{ path('settings.project.list') }}">Projects</a></li>
+        <li class="active">Create project</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+
+    <div class="box box-primary" role="presentation">
+        <div class="box-header">
+            <h3 class="box-title">New project</h3>
+        </div>
+        <div class="box-body">
+            {% if sources['gitlab'] is defined %}
+                <h2>Gitlab</h2>
+                <ul>
+                    {% for repository in sources['gitlab'] %}
+                        <li>{{ repository.url }} <a href="{{ path('project_create_gitlab', {'id': repository.id}) }}">Create</a></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            {% if sources['github'] is defined %}
+                <h2>Github</h2>
+                <ul>
+                    {% for repository in sources['github'] %}
+                        <li>{{ repository.url }} <a href="{{ path('project_create_github', {'id': repository.id}) }}">Create</a></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}

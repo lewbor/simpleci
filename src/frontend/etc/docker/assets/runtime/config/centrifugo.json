@@ -1,0 +1,9 @@
+{
+  "secret": "{{SECRET}}",
+  "port": 8000,
+  "log_level": "info",
+  "engine": "redis",
+  "redis_api": true,
+  "redis_host": "{{REDIS_HOST}}",
+  "redis_port": {{REDIS_PORT}}
+}

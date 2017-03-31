@@ -1,0 +1,15 @@
+vendor/
+.idea/
+
+web/assets/
+web/bundles/
+app/config/parameters.yml
+var/cache/
+var/logs/
+var/bootstrap.php.cache
+var/SymfonyRequirements.php
+bin/*
+!bin/console
+
+
+

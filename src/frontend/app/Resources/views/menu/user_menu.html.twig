@@ -1,0 +1,50 @@
+<div class="user-menu">
+    {% for project in projects %}
+        {% if project['last_build'] is not empty %}
+            {% set build = project['last_build'] %}
+        {% else %}
+            {% set build = null %}
+        {% endif %}
+        <div class="project {% if build is not null %}{{ build.status }}{% endif %}">
+            {% if build is  not null %}
+                <h2 class="project-name">
+                    <a class="{{ build.status }}"
+                       href="{{ path('project_view', {'id':project['id']}) }}">{{ project['name'] }}</a>
+                </h2>
+            {% else %}
+                <h2 class="project-name">
+                    <a href="{{ path('project_view', {'id':project['id']}) }}">{{ project['name'] }}</a>
+                </h2>
+            {% endif %}
+            {% if build is  not null %}
+                <p class="pull-right">
+                    <a href="{{ path('build_view', {'id': build.id}) }}">#{{ build.number }}</a>
+                </p>
+                <p class="build-info">
+                    {% if build.startedAt is not null %}
+                        <i class="fa fa-clock-o" title="Build duration"></i>
+                        {% if build.endedAt is not null %}
+                            {{ build.endedAt|simple_time_diff(build.startedAt) }} <br/>
+                        {% else %}
+                            <span data-widget="duration_clock"
+                                  data-started="{{ build.startedAt.getTimestamp() }}"
+                                  data-current="{{ date().timestamp }}"></span>
+                        {% endif %}
+                    {% endif %}
+                </p>
+                <p class="build-info">
+                    <i class="fa fa-calendar" title="Created at"></i>
+                    <span title="{{ build.createdAt|date }}">{{ build.createdAt|ago }}</span>
+                </p>
+            {% endif %}
+
+
+            <div class="project-actions">
+                <p class="pull-right">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> <a
+                            href="{{ path('build_create', {'id': project['id']}) }}">New build</a>
+                </p>
+            </div>
+        </div>
+    {% endfor %}
+</div>

@@ -1,0 +1,64 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block title %}Sign in{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <div class="row">
+            <div class="col-md-5 product-description">
+                <h1>Simple CI</h1>
+
+                <h3>Open source docker-based continuous integration tool</h3>
+
+                <p>Test and deploy your projects using Simple CI. Run tests using prepared or your own docker images.
+                    Multistage pipeline.</p>
+            </div>
+
+            <div class="col-md-5">
+
+                <div class="login-box">
+                    <div class="login-heading">
+                        <h3>Sign in</h3>
+                    </div>
+                    <div class="login-body">
+                        <form action="{{ path("fos_user_security_check") }}" method="post">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+
+                            {% if error %}
+                                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            {% endif %}
+
+                            <input type="text" id="username" name="_username" value="{{ last_username }}"
+                                   class="form-control" placeholder="User" required="required"/> <input type="password"
+                                                                                                        id="password"
+                                                                                                        name="_password"
+                                                                                                        class="form-control"
+                                                                                                        placeholder="Password"
+                                                                                                        required="required"/>
+
+                            <div class="remember-me">
+                                <input type="checkbox" id="remember_me" name="_remember_me" checked="checked"/> <label
+                                        for="remember_me">Remember me</label>
+
+                                <div class="pull-right">
+                                    <p><a href="{{ path('fos_user_resetting_request') }}">Forget password?</a></p>
+                                </div>
+                            </div>
+
+
+                            <button type="submit" id="_submit" name="_submit" class="btn bg-olive">Sign in
+                            </button>
+
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock content %}

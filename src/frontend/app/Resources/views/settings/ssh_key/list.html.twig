@@ -1,0 +1,56 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block title %}Ssh keys{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li>Settings</li>
+        <li class="active">Ssh keys</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-7">
+
+            <div class="box box-primary" role="presentation">
+                <div class="box-header">
+                    <h3 class="box-title">Ssh keys
+                        <a href="{{ path(controllerDescription.routes['create']) }}"><span
+                                    class="add-item-link">Add</span> </a>
+                    </h3>
+                </div>
+                <div class="box-body">
+                    {% if entity_list|length > 0 %}
+                        <table class="table">
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Created at</th>
+                                <th>Actions</th>
+                            </tr>
+                            {% for entity in entity_list %}
+                                <tr>
+                                    <td>{{ entity.id }}</td>
+                                    <td>{{ entity.name }}</td>
+                                    <td>{{ entity.createdAt|ago }}</td>
+                                    <td>
+                                        <a href="{{ path(controllerDescription.routes['edit'], {'id': entity.id}) }}">Edit</a> |
+                                        <a href="{{ path(controllerDescription.routes['view'], {'id': entity.id}) }}">View</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                        No ssh keys yet.
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-5">
+        </div>
+    </div>
+
+{% endblock %}

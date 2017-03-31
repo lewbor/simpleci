@@ -1,0 +1,59 @@
+{% extends 'layout/base.html.twig' %}
+
+{% block body %}
+    <!-- header logo: style can be found in header.less -->
+    <header class="header">
+        <a href="/" class="logo">SimpleCi</a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+
+            <a href="javascript://" class="navbar-btn sidebar-toggle" data-widget="sidebar_toggle" role="button"> <span
+                        class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
+                        class="icon-bar"></span> <span class="icon-bar"></span> </a>
+
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="{{ path('settings.gitlab_repository.list') }}" title="Settings"> <i
+                                    class="glyphicon glyphicon-plus"></i> Settings </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ path('profile_settings') }}" title="Profile settings"> <i
+                                    class="glyphicon glyphicon-wrench">Profile settings</i>
+
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ path('fos_user_security_logout') }}" title="Sign out"> <i
+                                    class="glyphicon glyphicon-off"></i>Sign out </a>
+                    </li>
+                </ul>
+
+            </div>
+        </nav>
+    </header>
+
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        <aside class="left-side sidebar-offcanvas">
+            <section class="sidebar">
+                {{ render(controller('controller.menu:userMenuAction')) }}
+            </section>
+        </aside>
+
+        <aside class="right-side">
+            <section class="content-header">
+                {% block breadcrumbs %}
+                {% endblock %}
+            </section>
+
+            <section class="content">
+                {% block flash %}
+                    {% include 'layout/flash.html.twig' %}
+                {% endblock %}
+                {% block content %}{% endblock %}
+            </section>
+        </aside>
+    </div>
+{% endblock %}

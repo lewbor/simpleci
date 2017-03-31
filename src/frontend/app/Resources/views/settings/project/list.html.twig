@@ -1,0 +1,59 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block title %}Projects{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li>Settings</li>
+        <li class="active">Projects</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+
+            <div class="box box-primary" role="presentation">
+                <div class="box-header">
+                    <h3 class="box-title">Projects
+                        <a href="{{ path('project_create') }}"><span
+                                    class="add-item-link">Add</span> </a>
+                    </h3>
+                </div>
+                <div class="box-body">
+                    {% if entity_list|length > 0 %}
+                        <table class="table">
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Repository url</th>
+                                <th>Ssh key</th>
+                                <th>Cache</th>
+                                <th>Provider</th>
+                                <th>Actions</th>
+                            </tr>
+                            {% for entity in entity_list %}
+                                <tr>
+                                    <td>{{ entity.id }}</td>
+                                    <td>{{ entity.name }}</td>
+                                    <td>{{ entity.repositoryUrl }}</td>
+                                    <td>{% if entity.sshKey is not null %}{{ entity.sshKey.name }}{% endif %}</td>
+                                    <td>{% if entity.cache is not null %}{{ entity.cache.name }}{% endif %}</td>
+                                    <td>{% if entity.provider is not null %}{{ entity.provider.name }}{% endif %}</td>
+                                    <td>
+                                        <a href="{{ path(controllerDescription.routes['edit'], {'id': entity.id}) }}">Edit</a>
+                                        | <a href="{{ path('project_view', {'id': entity.id}) }}">View</a>
+                                        | <a href="{{ path('project_remove', {'id': entity.id}) }}">Remove</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                        No google storage caches yet.
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+
+{% endblock %}

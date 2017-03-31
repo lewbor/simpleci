@@ -1,0 +1,45 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block title %}
+    {% if entity.id is null %} Add project {% else %} Edit project {% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li>Settings</li>
+        <li><a href="{{ path(controllerDescription.routes['list']) }}">Projects</a></li>
+        <li class="active">{{ block('title') }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-7">
+
+            <div class="box box-primary" role="presentation">
+                <div class="box-header">
+                    <h3 class="box-title">Project</h3>
+                </div>
+                <div class="box-body">
+                    {{ form_start(form) }}
+                    {{ form_row(form.name, {'label': 'Name'}) }}
+                    {{ form_row(form.description, {'label': 'Description'}) }}
+                    {{ form_row(form.repositoryUrl, {'label': 'Repository url'}) }}
+
+                    {{ form_row(form.serverIdentity, {'label': 'Server identity'}) }}
+                    {{ form_row(form.repository, {'label': 'Repository'}) }}
+
+                    {{ form_row(form.sshKey, {'label': 'Ssh key'}) }}
+                    {{ form_row(form.cache, {'label': 'Cache'}) }}
+                    {{ form_row(form.provider, {'label': 'Provider'}) }}
+                    {{ form_rest(form) }}
+
+                    <button class="btn btn-primary">Save</button>
+                    <a href="{{ path(controllerDescription.routes['list']) }}" class="btn btn-default">Cancel</a>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'layout/index.html.twig' %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="active"><a href="{{ path('main_page') }}">Main</a></li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-6">
+            You have no builds
+        </div>
+    </div>
+
+
+{% endblock %}

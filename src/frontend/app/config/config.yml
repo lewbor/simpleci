@@ -1,0 +1,110 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+
+    - { resource: services/frontend/controller.yml }
+    - { resource: services/frontend/service.yml }
+    - { resource: services/settings/controller.yml }
+
+framework:
+    translator:
+      fallbacks: ["%locale%"]
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        handler_id: session.handler.pdo
+    fragments:       ~
+    http_method_override: true
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    form_themes:
+      - 'layout/layout.html.twig'
+    globals:
+      centrifugoManager: '@centrifugo'
+
+doctrine_migrations:
+    dir_name: '%kernel.root_dir%/migrations'
+
+doctrine:
+    dbal:
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        server_version: 5.6 # for lazy connection
+        types:
+          RepositoryType: AppBundle\Model\Type\RepositoryType
+          OperationStatus: AppBundle\Model\Type\OperationStatus
+        mapping_types:
+          enum: string
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+        mappings:
+          AppBundle:
+              dir:  '%kernel.root_dir%/../src/AppBundle/Model/Entity'
+              prefix: AppBundle\Model\Entity
+              type: annotation
+              is_bundle: false
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: "%mailer_transport%"
+    host:      "%mailer_host%"
+    username:  "%mailer_user%"
+    password:  "%mailer_password%"
+    spool:     { type: memory }
+
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: AppBundle\Model\Entity\User
+
+knp_paginator:
+    page_range: 5
+    default_options:
+        page_name: page
+        sort_field_name: sort
+        sort_direction_name: direction
+        distinct: true
+    template:
+        pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host: "%rabbitmq_host%"
+            port: "%rabbitmq_port%"
+            user: "%rabbitmq_user%"
+            password: "%rabbitmq_password%"
+            vhost:    '/'
+            lazy:     true
+            connection_timeout: 3
+            read_write_timeout: 3
+            keepalive: false
+            heartbeat: 0
+    producers:
+        dispatcher:
+            connection:       default
+            queue_options: {name: 'worker.log' }
+            exchange_options: {name: 'worker.log', type: 'direct' }
+
+

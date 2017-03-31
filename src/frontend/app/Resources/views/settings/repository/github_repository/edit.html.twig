@@ -1,0 +1,38 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block title %}
+    {% if entity.id is null %} Add repository {% else %} Edit repository {% endif %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li>Settings</li>
+        <li>Repository</li>
+        <li><a href="{{ path(controllerDescription.routes['list']) }}">Github</a></li>
+        <li class="active">{{ block('title') }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-7">
+
+            <div class="box box-primary" role="presentation">
+                <div class="box-header">
+                    <h3 class="box-title">Github repository</h3>
+                </div>
+                <div class="box-body">
+                    {{ form_start(form) }}
+                    {{ form_row(form.url, {'label': 'Url'}) }}
+                    {{ form_row(form.token, {'label': 'Token'}) }}
+                    {{ form_rest(form) }}
+
+                    <button class="btn btn-primary">Save</button>
+                    <a href="{{ path(controllerDescription.routes['list']) }}" class="btn btn-default">Cancel</a>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

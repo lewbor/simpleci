@@ -1,0 +1,37 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block title %}Account info{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li>Settings</li>
+        <li><a href="{{ path(controllerDescription.routes['list']) }}">Google cloud accounts</a></li>
+        <li class="active">{{ block('title') }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-9">
+
+            <div class="box box-primary" role="presentation">
+                <div class="box-header">
+                    <h3 class="box-title">Google cloud account</h3>
+                </div>
+                <div class="box-body">
+                    <table class="table" style="table-layout: fixed; width: 100%">
+                        <tr>
+                            <th style="width: 100px">Name</th>
+                            <td>{{ entity.name }}</td>
+                        </tr>
+                                <tr>
+                            <th>Service account</th>
+                            <td style="word-wrap: break-word">{{ entity.serviceAccount }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

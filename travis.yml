@@ -1,0 +1,37 @@
+sudo: required
+
+services:
+  - docker
+
+php:
+  - 7.0
+
+cache:
+  yarn: true
+  directories:
+    - $HOME/.composer/cache
+
+before_script:
+  - pushd src/frontend
+  - etc/travis/before_script.sh
+  - popd
+
+script:
+  - pushd src/backend
+  - etc/travis/script.sh
+  - popd
+
+  - pushd src/frontend
+  - etc/travis/script.sh
+  - popd
+
+after_success:
+  - pushd src/backend
+  - etc/travis/after_success.sh
+  - popd
+
+  - pushd src/frontend
+  - etc/travis/after_success.sh
+  - popd
+
+

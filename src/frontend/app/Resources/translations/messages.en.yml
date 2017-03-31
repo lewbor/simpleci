@@ -1,0 +1,25 @@
+enum:
+  operation_status:
+    pending: Pending
+    running: Running
+    stopped: Stopped
+    finished_success: Success
+    failed: Failed
+
+  repository_type:
+    gitlab: Gitlab
+    github: Guthub
+
+  cache_type:
+    none: None cache manager
+    ssh: Ssh cache manager
+    s3: Amazon S3 cache manager
+    gs: Google storage cache manager
+
+  gce_machine_type:
+    n1-standard-1: 'n1-standard-1 (1 cpu, 3/75 GB memory)'
+    n1-standard-2: 'n1-standard-2 (2 cpu, 7.5 GB memory)'
+
+  gce_disk_type:
+    pd-standard: Standart persistent disk
+    pd-ssd: SSD persistent disk

@@ -1,0 +1,101 @@
+{% extends 'layout/index.html.twig' %}
+
+{% block title %}
+    {{ project.name }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="active"><a href="{{ path('project_view', {'id': project.id}) }}">{{ project.name }}</a></li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            {% embed 'core/box.html.twig' %}
+                {% block title %}
+                    Builds
+                    <a href="{{ path('build_create', {'id': project.id}) }}"><span
+                                class="add-item-link">New build</span> </a>
+                {% endblock %}
+                {% block body %}
+
+                    {% if entityList|length > 0 %}
+                        <table class="table" data-widget="project_action_listener" data-project="{{ project.id }}">
+                            {% for build in entityList %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ path('build_view', {'id':build.id}) }}">
+                                             <span class="build-status-label label label-{{ build.status|bootstrap_build_class }}">
+                                            #{{ build.number }} {{ build.status|translate_enum('AppBundle\\Model\\Type\\OperationStatus') }}
+                                        </span> </a>
+                                    </td>
+                                    <td>
+                                        {{ build | build_commit_link }} to {{ build | branch_link }} {% if build.tag is not null %}(tag){% endif %}<br/>
+                                        {{ build.authorName }} ({{ build.authorEmail }})
+                                    </td>
+                                    <td> {{ build.message }}</td>
+                                    <td style="min-width: 110px;">
+                                        {% if build.startedAt is not null %}
+                                            <i class="fa fa-clock-o" title="Build duration"></i>
+                                            {% if build.endedAt is not null %}
+                                                {{ build.endedAt|simple_time_diff(build.startedAt) }} <br/>
+                                            {% else %}
+                                                <span data-widget="duration_clock"
+                                                      data-started="{{ build.startedAt.getTimestamp() }}"
+                                                      data-current="{{ date().timestamp }}"></span> <br/>
+                                            {% endif %}
+                                        {% endif %}
+
+                                        <i class="fa fa-calendar" title="Created at"></i>
+                                        <span title="{{ build.createdAt|date }}">{{ build.createdAt|ago }}</span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                        <div class="navigation text-center">
+                            {{ knp_pagination_render(entityList) }}
+                        </div>
+                    {% else %}
+                        You have no builds in project
+                    {% endif %}
+
+                {% endblock %}
+            {% endembed %}
+        </div>
+        <div class="col-md-4">
+            {% embed 'core/box.html.twig' %}
+                {% block title %}Project info{% endblock %}
+                {% block body %}
+                    <table class="table">
+                        <tr>
+                            <th class="col-md-3">Name</th>
+                            <td class="col-md-9">{{ project.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td class="break-all">{{ project.description }}</td>
+                        </tr>
+                        <tr>
+                            <th>Repository url</th>
+                            <td>{{ project.repositoryUrl }}</td>
+                        </tr>
+                        {% if project.sshKey is not null %}
+                            <tr>
+                                <th>Public key</th>
+                                <td class="break-all">{{ project.sshKey.publicKey }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <th>Push hook url</th>
+                            <td>{{ pushUrl }}</td>
+                        </tr>
+                    </table>
+                {% endblock %}
+            {% endembed %}
+
+        </div>
+    </div>
+
+{% endblock %}

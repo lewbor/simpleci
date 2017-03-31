@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>
+        {% set _block = block('page_header') %}
+        {% if _block is not empty %}
+            {{ _block|raw }}
+        {% else %}
+            {% block title %}{% endblock %}
+        {% endif %}
+    </title>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="/assets/styles.css"/>
+    {% endblock %}
+
+    {% block javascripts %}
+        {% autoescape false %}
+        <script>
+            var SimpleciApp = {
+                centrifugo: {{ centrifugoManager.clientRequisites()|json_encode }}
+            }
+        </script>
+        {% endautoescape %}
+        <script src="/assets/app.js"></script>
+    {% endblock %}
+</head>
+<body class="skin-blue">
+{% block body %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,128 @@
+{% extends 'layout/index.html.twig' %}
+
+{% block title %}
+    Build #{{ entity.number }} - {{ project.name }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('project_view', {'id': project.id}) }}">{{ project.name }}</a></li>
+        <li>Build #{{ entity.number }}</li>
+    </ol>
+{% endblock %}
+
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <div class="box box-primary" role="presentation">
+                <div class="box-header">
+                    <h2 class="box-title">
+                        Build #{{ entity.number }} - Jobs
+                    </h2>
+                </div>
+                <div class="box-body">
+                    <table class="table" data-widget="project_action_listener" data-project="{{ entity.project.id }}">
+                        <tr>
+                            <th>#</th>
+                            <th>Stage</th>
+                            <th>Image</th>
+                            <th>Env</th>
+                            <th>Started</th>
+                            <td>Actions</td>
+                        </tr>
+                        {% for job in entity.jobs %}
+                            {% set jobConfig = job.config|json_decode %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('job_view', {'id':job.id}) }}">
+                                             <span class="build-status-label label label-{{ job.status|bootstrap_build_class }}">
+                                            #{{ job.build.number }}
+                                                 .{{ job.number }} {{ job.status|translate_enum('AppBundle\\Model\\Type\\OperationStatus') }}
+                                        </span>
+                                    </a>
+                                </td>
+                                <td>{{ job.stage }}</td>
+                                <td>
+                                    {% if jobConfig['container']['image'] is defined %}
+                                        {{ jobConfig['container']['image']['name'] }}:{{ jobConfig['container']['image']['tag'] }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if jobConfig['container']['environment'] is defined %}
+                                        {% for env in jobConfig['container']['environment'] %}
+                                            {{ env['name'] }}={{ env['value'] }} {% if not loop.last %}<br/>{% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if job.startedAt is not null %}
+                                        <i class="fa fa-clock-o" title="Job duration"></i>
+                                        {% if job.endedAt is not null %}
+                                            {{ job.endedAt|simple_time_diff(job.startedAt) }} <br/>
+                                        {% else %}
+                                            <span data-widget="duration_clock"
+                                                  data-started="{{ job.startedAt.getTimestamp() }}"
+                                                  data-current="{{ date().timestamp }}"></span>
+                                            <br/>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    <i class="fa fa-calendar" title="Created at"></i>
+                                    <span title="{{ job.createdAt|date }}">{{ job.createdAt|ago }}</span>
+                                </td>
+                                <td>
+                                    {% if job.status == 'running' %}
+                                        <a href="" class="glyphicon glyphicon-stop" title="Stop"
+                                           data-widget="job_stopper" data-job="{{ job.id }}"></a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            {% embed 'core/box.html.twig' %}
+                {% block title %}Commit info{% endblock %}
+                {% block body %}
+                    <table class="table">
+                        <tr>
+                            <th>Commit</th>
+                            <td>{{ entity | build_commit_link }}</td>
+                        </tr>
+                        <tr>
+                            <th>Branch</th>
+                            <td>{{ entity | branch_link }}</td>
+                        </tr>
+                        <tr>
+                            <th>Author</th>
+                            <td>{{ entity.authorName }}</td>
+                        </tr>
+                        <tr>
+                            <th>E-mail</th>
+                            <td>{{ entity.authorEmail }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Message</th>
+                            <td>{{ entity.message }}</td>
+                        </tr>
+                    </table>
+                {% endblock %}
+            {% endembed %}
+
+            {% embed 'core/box.html.twig' %}
+                {% block title %}Actions{% endblock %}
+                {% block body %}
+                    <a href="{{ path('build_delete', {'id': entity.id}) }}" class="btn btn-danger">
+                        <i class="fa fa-trash"></i> Delete build</a> - Delete all build info including jobs and logs
+                {% endblock %}
+            {% endembed %}
+        </div>
+    </div>
+
+{% endblock %}

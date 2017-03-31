@@ -1,0 +1,59 @@
+services:
+
+  session.handler.pdo:
+    class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+    public:    false
+    arguments:
+      - "mysql:host=%database_host%;port=%database_port%;dbname=%database_name%"
+      - { db_username: '%database_user%', db_password: '%database_password%' }
+
+  centrifugo:
+    class: AppBundle\Model\Service\Centrifugo
+    arguments:
+      - '@security.token_storage'
+      - '%centrifugo_secret%'
+
+  flash_helper:
+    class: AppBundle\System\Service\FlashHelper
+    arguments:
+      - '@translator'
+      - '@session'
+
+  twig.db_extension:
+    class: AppBundle\System\Twig\TwigDbExtension
+    arguments:
+      - '@doctrine.orm.entity_manager'
+    tags:
+      - { name: twig.extension }
+
+  ssh_keys_generator:
+    class: AppBundle\Model\Service\SshKeysGenerator
+
+  build.creator:
+    class: AppBundle\Model\Service\BuildCreator
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@old_sound_rabbit_mq.dispatcher_producer'
+      - '@logger'
+
+  twig.build_extension:
+    class: AppBundle\System\Twig\TwigExtension
+    tags: [ { name: twig.extension } ]
+
+
+  enum.translator:
+    class: AppBundle\System\Enum\EnumTranslator
+    arguments: ['@translator']
+
+  form.enum:
+    class: AppBundle\System\Enum\EnumType
+    arguments:
+      - '@enum.translator'
+    tags: [{name: form.type}]
+
+  enum.twig_extension:
+    class: AppBundle\System\Enum\EnumExtension
+    arguments:
+      - '@enum.translator'
+    tags: [{name: twig.extension}]
+

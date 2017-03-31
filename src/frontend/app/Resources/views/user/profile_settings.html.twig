@@ -1,0 +1,27 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block title %}
+    User settings
+{% endblock %}
+
+{% block content %}
+    {% embed 'core/box.html.twig' %}
+        {% block title %}User settings{% endblock %}
+        {% block body %}
+            {{ form_start(user_form) }}
+            {{ form_rest(user_form) }}
+            <button type="submit" class="btn btn-primary">Save</button>
+            {{ form_end(user_form) }}
+        {% endblock %}
+    {% endembed %}
+
+    {% embed 'core/box.html.twig' %}
+        {% block title %}Change password{% endblock %}
+        {% block body %}
+            {{ form_start(password_form) }}
+            {{ form_rest(password_form) }}
+            <button type="submit" class="btn btn-primary">Save</button>
+            {{ form_end(password_form) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block title %}S3 caches{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li>Settings</li>
+        <li class="active">S3 caches</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+
+            <div class="box box-primary" role="presentation">
+                <div class="box-header">
+                    <h3 class="box-title">
+                        S3 caches
+                        <a href="{{ path(controllerDescription.routes['create']) }}"><span
+                                    class="add-item-link">Add</span> </a>
+                    </h3>
+                </div>
+                <div class="box-body">
+                    {% if entity_list|length > 0 %}
+                        <table class="table">
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Endpoint</th>
+                                <th>Bucket</th>
+                                <th>Access key</th>
+                                <th>Secret key</th>
+                                <th>Actions</th>
+                            </tr>
+                            {% for entity in entity_list %}
+                                <tr>
+                                    <td>{{ entity.id }}</td>
+                                    <td>{{ entity.name }}</td>
+                                    <td>{{ entity.endpoint }}</td>
+                                    <td>{{ entity.bucket }}</td>
+                                    <td>{{ entity.accessKey }}</td>
+                                    <td>{{ entity.secretKey }}</td>
+                                    <td>
+                                        <a href="{{ path(controllerDescription.routes['edit'], {'id': entity.id}) }}">Edit</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                        No google storage caches yet.
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+
+        </div>
+    </div>
+
+{% endblock %}

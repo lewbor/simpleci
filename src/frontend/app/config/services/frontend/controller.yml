@@ -1,0 +1,127 @@
+services:
+
+  controller.menu:
+    class: AppBundle\Core\MenuController
+    arguments:
+      - '@templating'
+      - '@router'
+      - '@doctrine.orm.entity_manager'
+
+  controller.centrifugo:
+    class: AppBundle\Core\CentrifugoController
+    arguments: ['@centrifugo']
+
+  controller.main_page:
+    class: AppBundle\Core\MainPageController
+    arguments:
+      - '@templating'
+      - '@doctrine.orm.entity_manager'
+      - '@router'
+      - '@kernel'
+
+  controller.project:
+    class: AppBundle\Frontend\Project\ProjectController
+    arguments:
+      - '@templating'
+      - '@form.factory'
+      - '@router'
+      - '@doctrine.orm.entity_manager'
+      - '@flash_helper'
+      - '@knp_paginator'
+      - '%hostname%'
+
+  controller.settings.project.gitlab:
+    class: AppBundle\Settings\Project\Gitlab\GitlabProjectController
+    arguments:
+      - '@templating'
+      - '@form.factory'
+      - '@router'
+      - '@doctrine.orm.entity_manager'
+      - '@flash_helper'
+      - '%hostname%'
+
+  controller.settings.project.github:
+    class: AppBundle\Settings\Project\Github\GitlabProjectController
+    arguments:
+      - '@templating'
+      - '@form.factory'
+      - '@router'
+      - '@doctrine.orm.entity_manager'
+      - '@flash_helper'
+
+  controller.build:
+    class: AppBundle\Frontend\Build\BuildController
+    arguments:
+      - '@templating'
+      - '@form.factory'
+      - '@router'
+      - '@doctrine.orm.entity_manager'
+      - '@flash_helper'
+      - '@centrifugo'
+      - '@http_kernel'
+
+  controller.job:
+    class: AppBundle\Frontend\Job\JobController
+    arguments:
+      - '@templating'
+      - '@form.factory'
+      - '@router'
+      - '@doctrine.orm.entity_manager'
+      - '@flash_helper'
+      - '@centrifugo'
+      - '@old_sound_rabbit_mq.dispatcher_producer'
+      - '@http_kernel'
+
+  controller.build.github:
+    class: AppBundle\Frontend\Build\Github\GithubBuildController
+    arguments:
+      - '@templating'
+      - '@form.factory'
+      - '@router'
+      - '@doctrine.orm.entity_manager'
+      - '@flash_helper'
+      - '@build.creator'
+
+  controller.build.gitlab:
+    class: AppBundle\Frontend\Build\Gitlab\GitlabBuildController
+    arguments:
+      - '@templating'
+      - '@form.factory'
+      - '@router'
+      - '@doctrine.orm.entity_manager'
+      - '@flash_helper'
+      - '@build.creator'
+
+  controller.user:
+    class: AppBundle\Frontend\Security\UserController
+    arguments:
+      - '@templating'
+      - '@form.factory'
+      - '@security.token_storage'
+      - '@fos_user.user_manager'
+      - '@flash_helper'
+
+  controller.hook:
+    class: AppBundle\Frontend\Webhook\WebHookController
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@logger'
+      - '@hook_processor.gitlab'
+      - '@hook_processor.github'
+
+  hook_processor.gitlab:
+    class: AppBundle\Frontend\Webhook\GitlabWebHookProcessor
+    arguments:
+      - '@logger'
+      - '@build.creator'
+
+  hook_processor.github:
+    class: AppBundle\Frontend\Webhook\GithubWebHookProcessor
+    arguments:
+      - '@logger'
+      - '@build.creator'
+
+
+
+
+

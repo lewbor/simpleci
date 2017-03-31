@@ -1,0 +1,52 @@
+services:
+
+  controller.crud:
+    abstract: true
+    class: AppBundle\System\Controller\Crud\CrudController
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@templating'
+      - '@router'
+      - '@form.factory'
+      - '@flash_helper'
+
+  controller.settings.ssh_key:
+    class: AppBundle\Settings\SshKey\SshKeyController
+    parent: controller.crud
+    calls:
+      - [setKeysGenerator, ['@ssh_keys_generator']]
+      - [setHostName, ['%hostname%']]
+
+  controller.settings.google_cloud_account:
+    class: AppBundle\Settings\Account\GoogleCloudAccount\GcAccountController
+    parent: controller.crud
+
+  controller.settings.google_compute_provider:
+    class: AppBundle\Settings\Provider\GoogleComputeProvider\GcpController
+    parent: controller.crud
+
+  controller.settings.google_storage_cache:
+    class: AppBundle\Settings\Cache\GoogleStorageCache\GoogleStorageCacheController
+    parent: controller.crud
+
+  controller.settings.s3_cache:
+    class: AppBundle\Settings\Cache\S3Cache\S3CacheController
+    parent: controller.crud
+
+  controller.settings.gitlab_repository:
+    class: AppBundle\Settings\Repository\Gitlab\GitlabController
+    parent: controller.crud
+
+  controller.settings.github_repository:
+    class: AppBundle\Settings\Repository\Github\GithubController
+    parent: controller.crud
+
+  controller.settings.project:
+    class: AppBundle\Settings\Project\ProjectController
+    parent: controller.crud
+
+  controller.settings.user:
+    class: AppBundle\Settings\User\UserController
+    parent: controller.crud
+    calls:
+      - [setUserManager, ['@fos_user.user_manager']]

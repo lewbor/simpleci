@@ -1,0 +1,28 @@
+project_view:
+    path: /project/{id}
+    defaults: {_controller: controller.project:viewAction}
+
+build_create:
+    path: /project/{id}/build/create
+    defaults: {_controller: controller.build:createAction}
+
+build_delete:
+    path: /build/{id}/delete
+    defaults: {_controller: controller.build:deleteAction}
+
+build_view:
+  path: /build/{id}
+  defaults: {_controller: controller.build:viewAction}
+
+
+job_view:
+  path: /job/{id}
+  defaults: {_controller: controller.job:viewAction}
+
+job_stop:
+  path: /job/{id}/stop
+  defaults: {_controller: controller.job:stopAction}
+
+log_view:
+  path: /job/{id}/log
+  defaults: {_controller: controller.job:logAction}

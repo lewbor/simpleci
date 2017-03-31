@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1' name='viewport'>
+
+    <title>{% block title %}{% endblock %}</title>
+
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css" href="/assets/styles.css"/>
+    {% endblock %}
+
+    {% block javascripts %}
+        <script src="/assets/app.js"></script>
+    {% endblock %}
+</head>
+
+<body class="security-page">
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+
+</html>

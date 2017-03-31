@@ -1,0 +1,56 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block title %}Gitlab repositories{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li>Settings</li>
+        <li>Repository</li>
+        <li class="active">{{ block('title') }}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-7">
+
+            <div class="box box-primary" role="presentation">
+                <div class="box-header">
+                    <h3 class="box-title">Gitlab repositories
+                        <a href="{{ path(controllerDescription.routes['create']) }}"><span
+                                    class="add-item-link">Add</span> </a>
+                    </h3>
+                </div>
+                <div class="box-body">
+                    {% if entity_list|length > 0 %}
+                        <table class="table">
+                            <tr>
+                                <th>Id</th>
+                                <th>Url</th>
+                                <th>Token</th>
+                                <th>Actions</th>
+                            </tr>
+                            {% for entity in entity_list %}
+                                <tr>
+                                    <td>{{ entity.id }}</td>
+                                    <td>{{ entity.url }}</td>
+                                    <td>{{ entity.token }}</td>
+                                    <td>
+                                        <a href="{{ path(controllerDescription.routes['edit'], {'id': entity.id}) }}">Edit</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                        No gce accounts yet.
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-5">
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,577 @@
+.build-status-label {
+  font-size: 14px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+span.add-item-link {
+  color: #2f9bc4;
+  margin-left: 10px;
+  border-width: 0 0 1px;
+  border-style: dashed;
+  cursor: pointer;
+}
+
+body.security-page {
+  padding-top: 60px;
+}
+
+div.product-description {
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+div.product-description h1 {
+  margin-top: 0;
+}
+
+div.login-box .remember-me {
+  margin-top: 10px;
+}
+
+.user-menu {
+  .project.pending {
+    border-left: 8px solid gray;
+  }
+  .project.running {
+    border-left: 8px solid #5bc0de;
+  }
+
+  .project.stopped {
+    border-left: 8px solid #5bc0de;
+  }
+  .project.finished_success {
+    border-left: 8px solid #3FA75F;
+  }
+  .project.failed {
+    border-left: 8px solid red;
+  }
+
+
+  .project {
+    border-left: 8px solid gray;
+    border-right: 4px solid #f4f4f4;
+    padding: 5px 10px 2px;
+    background-color: #fff;
+    margin-top: 10px;
+    min-height: 50px;
+
+    .project-name {
+      width: 75%;
+      white-space: nowrap;
+      font-size: 16px;
+      display: inline-block;
+      margin-top: 0;
+
+      a.failed {
+        color: red;
+      }
+
+      a.finished_success {
+        color: green;
+      }
+    }
+
+    .project-actions {
+      height: 25px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .build-info {
+      margin-top: 0;
+      margin-bottom: 3px;
+    }
+  }
+
+}
+
+.login-box {
+  padding: 15px;
+  background: rgb(243, 242, 242);
+  border-top: 2px solid #3c8dbc;
+  border-radius: 10px;
+}
+
+.follow_log {
+  z-index: 80;
+  position: absolute;
+  display: block;
+  top: 0;
+  right: 0;
+  margin: 10px 30px 0 0;
+  background-color: #666;
+  color: #bbb;
+  padding: 0 9px 4px;
+  line-height: 10px;
+  font-size: 16px;
+  border-radius: 3px;
+}
+
+.build_log {
+  clear: left;
+  min-height: 42px;
+  padding: 15px 0;
+  color: #F1F1F1;
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 19px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  background-color: #2a2a2a;
+  counter-reset: line-numbering;
+  margin-top: 0;
+}
+
+.build_log p {
+  position: relative;
+  padding: 0 15px 0 55px;
+  margin: 0;
+  min-height: 16px;
+}
+
+.build_log p a {
+  display: inline-block;
+  text-align: right;
+  min-width: 40px;
+  margin-left: -33px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #666;
+}
+
+.build_log p a::before {
+  content: counter(line-numbering);
+  counter-increment: line-numbering;
+  padding-right: 1em;
+}
+
+.ansi-fg-green {
+  color: #0A0;
+}
+
+.ansi-fg-yellow {
+  color: #FFFFB6;
+}
+
+.ansi-fg-red {
+  color: #FF6C60;
+}
+
+.ansi-fg-cyan {
+  color: #5FF;
+}
+
+.ansi-bg-black {
+  background-color: #4E4E4E
+}
+
+.ansi-bg-red {
+  background-color: #FF6C60
+}
+
+.ansi-bg-green {
+  background-color: #0A0
+}
+
+.ansi-bg-yellow {
+  background-color: #FFFFB6
+}
+
+.ansi-bg-blue {
+  background-color: #96CBFE
+}
+
+.ansi-bg-magenta {
+  background-color: #FF73FD
+}
+
+.ansi-bg-cyan {
+  background-color: #0AA
+}
+
+.ansi-bg-white {
+  background-color: #EEE
+}
+
+html, body {
+  overflow-x: hidden !important;
+  font-family: 'Source Sans Pro', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100%;
+  background: @body-bg;
+}
+
+a {
+  color: @link-color;
+}
+
+a:hover, a:active, a:focus {
+  outline: none;
+  text-decoration: none;
+  color: @link-hover-color;
+}
+
+/* Layouts */
+.wrapper {
+  min-height: 100%;
+  .clearfix();
+}
+
+/* Header */
+body > .header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+}
+
+/* Define 2 column template */
+.right-side, .left-side {
+  min-height: 100%;
+  display: block;
+}
+
+/*right side - contins main content*/
+.right-side {
+  background-color: @body-bg;
+  margin-left: @left-side-width;
+  padding-top: 50px;
+}
+
+/*left side - contains sidebar*/
+.left-side {
+  position: absolute;
+  width: @left-side-width;
+  top: 50px;
+}
+
+/* Left side collapse */
+.left-side.collapse-left {
+  left: -220px;
+}
+
+.right-side.strech {
+  margin-left: 0;
+}
+
+/*
+    By default the layout is not fixed but if you add the class .fixed to the body element
+    the sidebar and the navbar will automatically become poisitioned fixed
+*/
+body.fixed {
+  > .header, .left-side, .navbar {
+    position: fixed;
+  }
+  > .header {
+    top: 0;
+    right: 0;
+    left: 0;
+  }
+  .navbar {
+    left: 0;
+    right: 0;
+  }
+
+  .wrapper {
+    margin-top: 50px;
+  }
+
+}
+
+/* Content */
+.content {
+  padding: 20px 15px;
+  background: @body-bg;
+  overflow: auto;
+}
+
+/* Utility */
+
+/* H1 - H6 font */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+/* Page Header */
+.page-header {
+  margin: 10px 0 20px 0;
+  font-size: 22px;
+
+  > small {
+    color: #666;
+    display: block;
+    margin-top: 5px;
+  }
+}
+
+img {
+  max-width: 100% !important;
+}
+
+.sort-highlight {
+  background: #f4f4f4;
+  border: 1px dashed #ddd;
+  margin-bottom: 10px;
+}
+
+/* 10px padding and margins */
+.pad {
+  padding: 10px;
+}
+
+.margin {
+  margin: 10px;
+}
+
+/* Display inline */
+.inline {
+  display: inline;
+  width: auto;
+}
+
+/* Background colors */
+.bg-red,
+.bg-yellow,
+.bg-aqua,
+.bg-blue,
+.bg-light-blue,
+.bg-green,
+.bg-navy,
+.bg-teal,
+.bg-olive,
+.bg-lime,
+.bg-orange,
+.bg-fuchsia,
+.bg-purple,
+.bg-maroon,
+.bg-black {
+  color: #f9f9f9 !important;
+}
+
+.bg-gray {
+  background-color: @gray !important;
+}
+
+.bg-black {
+  background-color: @black !important;
+}
+
+.bg-red {
+  background-color: @red !important;
+}
+
+.bg-yellow {
+  background-color: @yellow !important;
+}
+
+.bg-aqua {
+  background-color: @aqua !important;
+}
+
+.bg-blue {
+  background-color: @blue !important;
+}
+
+.bg-light-blue {
+  background-color: @light-blue !important;
+}
+
+.bg-green {
+  background-color: @green !important;
+}
+
+.bg-navy {
+  background-color: @navy !important;
+}
+
+.bg-teal {
+  background-color: @teal !important;
+}
+
+.bg-olive {
+  background-color: @olive !important;
+}
+
+.bg-lime {
+  background-color: @lime !important;
+}
+
+.bg-orange {
+  background-color: @orange !important;
+}
+
+.bg-fuchsia {
+  background-color: @fuchsia !important;
+}
+
+.bg-purple {
+  background-color: @purple !important;
+}
+
+.bg-maroon {
+  background-color: @maroon !important;
+}
+
+/* Text colors */
+.text-red {
+  color: @red !important;
+}
+
+.text-yellow {
+  color: @yellow !important;
+}
+
+.text-aqua {
+  color: @aqua !important;
+}
+
+.text-blue {
+  color: @blue !important;
+}
+
+.text-light-blue {
+  color: @light-blue !important;
+}
+
+.text-green {
+  color: @green !important;
+}
+
+.text-navy {
+  color: @navy !important;
+}
+
+.text-teal {
+  color: @teal !important;
+}
+
+.text-olive {
+  color: @olive !important;
+}
+
+.text-lime {
+  color: @lime !important;
+}
+
+.text-orange {
+  color: @orange !important;
+}
+
+.text-fuchsia {
+  color: @fuchsia !important;
+}
+
+.text-purple {
+  color: @purple !important;
+}
+
+.text-maroon {
+  color: @maroon !important;
+}
+
+/*Hide elements by display none only*/
+.hide {
+  display: none !important;
+}
+
+/* Remove borders */
+.no-border {
+  border: 0px !important;
+}
+
+/* Remove padding */
+.no-padding {
+  padding: 0px !important;
+}
+
+/* Remove margins */
+.no-margin {
+  margin: 0px !important;
+}
+
+/* Remove box shadow */
+.no-shadow {
+  box-shadow: none !important;
+}
+
+/* Don't display when printing */
+@media print {
+  //Add to elements that you do not want to show when printing
+  .no-print {
+    display: none;
+  }
+
+  //Elements that we want to hide when printing
+  .left-side, .header, .content-header {
+    display: none;
+  }
+
+  //This is the only element that should appear, so let's remove the margins
+  .right-side {
+    margin: 0;
+  }
+
+  .box {
+    border: 0;
+  }
+
+  .page-break {
+    display: block;
+    page-break-before: always;
+  }
+
+  .report {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+}
+
+/* Remove border radius */
+.flat {
+  .border-radius(0) !important;
+}
+
+/* Change the color of the striped tables */
+.table-striped > tbody > tr:nth-child(odd) {
+  > td,
+  > th {
+    background-color: @table-striped-color;
+  }
+}
+
+/* .text-center in tables */
+table.text-center {
+  td, th {
+    text-align: center;
+  }
+}
+
+/* _fix for sparkline tooltip */
+.jqstooltip {
+  padding: 5px !important;
+  width: auto !important;
+  height: auto !important;
+}
+

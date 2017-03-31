@@ -1,0 +1,16 @@
+<div class="header">{{ 'security.title.reset'|trans }}</div>
+
+<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request">
+    <div class="body bg-gray">
+        {% if invalid_username is defined %}
+            <p>{{ 'security.reset.invalid_username'|trans({'%username%': invalid_username}) }}</p>
+        {% endif %}
+
+        <div class="form-group">
+            <input class="form-control" placeholder="{{ 'security.reset.username'|trans }}" type="text" id="username" name="username" required="required" />
+        </div>
+    </div>
+    <div class="footer">
+        <button class="btn bg-olive btn-block" type="submit">{{ 'security.reset.submit'|trans }}</button>
+    </div>
+</form>

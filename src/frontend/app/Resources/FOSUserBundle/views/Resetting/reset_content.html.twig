@@ -1,0 +1,21 @@
+<div class="header">{{ 'security.reset.title'|trans }}</div>
+
+<form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
+    {{ form_row(form._token) }}
+
+    <div class="body bg-gray">
+        <div class="form-group{% if not form.plainPassword.first.vars.valid %} has-error{% endif %}">
+            {{ form_widget(form.plainPassword.first, { 'attr': { 'class': 'form-control', 'placeholder': "security.change_password.new"|trans } }) }}
+            {{ form_errors(form.plainPassword.first) }}
+        </div>
+
+        <div class="form-group{% if not form.plainPassword.second.vars.valid %} has-error{% endif %}">
+            {{ form_widget(form.plainPassword.second, { 'attr': { 'class': 'form-control', 'placeholder': "security.change_password.new_confirm"|trans } }) }}
+            {{ form_errors(form.plainPassword.second) }}
+        </div>
+    </div>
+
+    <div class="footer">
+        <button type="submit" class="btn bg-olive btn-block">{{ 'security.reset.submit'|trans }}</button>
+    </div>
+</form>

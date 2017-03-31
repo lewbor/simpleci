@@ -1,0 +1,45 @@
+settings:
+  resource: "routing/settings.php"
+  prefix:   /
+
+frontend:
+  resource: "routing/frontend.yml"
+  prefix:   /
+
+fos_user:
+  resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+main_page:
+  path: /
+  defaults: {_controller: controller.main_page:indexAction}
+
+profile_settings:
+  path: /profile_settings
+  defaults: {_controller: controller.user:profileSettingsAction}
+
+project_remove:
+    path: /project/{id}/remove
+    defaults: {_controller: controller.settings.project:removeAction}
+
+project_create:
+    path: /settings/project/create
+    defaults: {_controller: controller.settings.project:createAction}
+
+project_create_gitlab:
+  path: /settings/project/create/gitlab/{id}
+  defaults: {_controller: controller.settings.project.gitlab:createAction}
+
+project_create_github:
+  path: /settings/project/create/github/{id}
+  defaults: {_controller: controller.settings.project.github:createAction}
+
+centrifugo_auth:
+  path: /api/centrifugo_auth
+  methods: [POST]
+  defaults: {_controller: controller.centrifugo:authAction}
+
+project_hook:
+  path: /hook/project/{id}
+  defaults: {_controller: controller.hook:hookAction}
+
+

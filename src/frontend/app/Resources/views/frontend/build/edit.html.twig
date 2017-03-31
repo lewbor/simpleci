@@ -1,0 +1,30 @@
+{% extends 'layout/index.html.twig' %}
+
+{% block title %}
+    Create build
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li><a href="{{ path('main_page') }}">Main</a></li>
+        <li class="active">Create build</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+
+
+    {% embed 'core/box.html.twig' %}
+        {% block title %}{% endblock %}
+        {% block body %}
+            {{ form_start(form) }}
+            {{ form_row(form.branch) }}
+            {{ form_row(form.commit) }}
+             <button type="submit" class="btn btn-default">Create</button>
+            {{ form_end(form) }}
+        {% endblock %}
+    {% endembed %}
+
+
+
+{% endblock %}

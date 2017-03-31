@@ -1,0 +1,13 @@
+<div class="item entity-collection-item"
+     data-widget="{{ widget|default('entity-collection-element') }}"
+     data-widget-parameters="{{ widget_parameters|default({})|json_encode }}">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            {% block body %}{% endblock %}
+
+            <div class="form-element-actions">
+                <a href="javascript://" data-widget-element="remove-element-button">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>

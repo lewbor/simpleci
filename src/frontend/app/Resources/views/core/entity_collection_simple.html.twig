@@ -1,0 +1,21 @@
+{% block entity_collection_widget %}
+    {% spaceless %}
+        <div data-prototype="{{ form_widget(form.vars.prototype)|e }}"
+             data-widget="{{ attr['data-widget']|default('entity-collection') }}">
+
+            {% if form.vars.errors|length > 0 %}
+                <div class="has-error">
+                    {{ form_errors(form) }}
+                </div>
+            {% endif %}
+
+            <div data-widget-element="entity-container">
+                {% for item in form %}
+                    {{ form_widget(item) }}
+                {% endfor %}
+            </div>
+
+            <button type="button" class="btn btn-default" data-widget-element="add-element-button">Add</button>
+        </div>
+    {% endspaceless %}
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "bootstrap_3_layout.html.twig" %}
+
+{% block add_entity_dialog %}
+    <div data-widget-element="entity-dialog">
+        {{- form_widget(form) -}}
+        <span>
+            <a href="javascript://" data-widget="entity-dialog">Добавить</a> элемент
+        </span>
+    </div>
+{% endblock %}
+
+{% block custom_form_widget %}
+    {% if widget == 'add' %}
+        {{- block('add_entity_dialog') -}}
+    {% else %}
+        {{- form_widget(form) -}}
+    {% endif %}
+{% endblock %}
+
+
+{% block form_row -%}
+    {% spaceless %}
+        {% set layout = layout|default('horizontal') %}
+        {% set widget = widget|default('') %}
+        {% set format = format|default('2|10') %}
+
+        {% set format = format|split('|') %}
+        {% set label_class = 'col-sm-' ~ format[0] %}
+        {% set field_class = 'col-sm-' ~ format[1] %}
+
+        {% if layout == 'horizontal' %}
+            <div class="form-group {% if not form.vars.valid %}has-error{% endif %}">
+                <div class="row">
+                    {{ form_label(form, label, {'label_attr' : {'class' : label_attr.class|default('') ~ ' ' ~ label_class ~ ' control-label' }} ) }}
+                    <div class="controls {{ field_class }}">
+                        {{- block('custom_form_widget') -}}
+                        {% if help is defined %}
+                            <span>{{ help }}</span>
+                        {% endif %}
+                        {{ form_errors(form) }}
+                    </div>
+                </div>
+            </div>
+        {% elseif layout == 'vertical' %}
+            <div class="form-group {% if not form.vars.valid %}has-error{% endif %}">
+                {{ form_label(form, label) }}
+                {{- block('custom_form_widget') -}}
+                {{ form_errors(form) }}
+            </div>
+        {% else %}
+            {{- parent() -}}
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}
+
+

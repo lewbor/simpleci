@@ -1,0 +1,62 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block title %}Users{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li>Settings</li>
+        <li class="active">Users</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-7">
+
+            <div class="box box-primary" role="presentation">
+                <div class="box-header">
+                    <h3 class="box-title">Users
+                        <a href="{{ path(controllerDescription.routes['create']) }}"><span
+                                    class="add-item-link">Add</span> </a>
+                    </h3>
+                </div>
+                <div class="box-body">
+                    {% if entity_list|length > 0 %}
+                        <table class="table">
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Enabled</th>
+                                <th>Last login</th>
+                                <th>Actions</th>
+                            </tr>
+                            {% for entity in entity_list %}
+                                <tr>
+                                    <td>{{ entity.id }}</td>
+                                    <td>{{ entity.username }}</td>
+                                    <td>{{ entity.email }}</td>
+                                    <td>{{ entity.enabled|bool_label }}</td>
+                                    <td>{% if entity.lastLogin is not null %}
+                                            {{ entity.lastLogin|date }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{{ path(controllerDescription.routes['edit'], {'id': entity.id}) }}">Edit</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                        No ssh keys yet.
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-5">
+        </div>
+    </div>
+
+{% endblock %}
