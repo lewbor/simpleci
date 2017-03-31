@@ -2,4 +2,4 @@
 set -e
 set -o verbose
 
-echo "Add tests to frontend"
+mcn install

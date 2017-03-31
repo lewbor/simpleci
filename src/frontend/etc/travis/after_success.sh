@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -e
+set -o verbose
 
 if [ ! -z "$TRAVIS_TAG" ]; then
     docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"

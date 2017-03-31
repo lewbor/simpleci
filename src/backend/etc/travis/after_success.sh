@@ -17,9 +17,6 @@ if [ ! -z "$TRAVIS_TAG" ]; then
     docker push simpleci/worker:$TRAVIS_TAG
     docker push simpleci/worker:latest
     popd
-else
-    docker build -t simpleci/frontend:experimental .
-    docker push simpleci/frontend:experimental
 fi
 
 
