@@ -46,7 +46,8 @@ class PhpInstaller
             'exif',
             'xmlrpc',
             'curl',
-            'gd'];
+            'gd'
+        ];
 
         self::$EXTENSIONS = [
             'memcache' => [],
@@ -58,23 +59,40 @@ class PhpInstaller
         ];
 
         self::$PHP_7_EXTENSIONS = [
-            'github:php-memcached-dev/php-memcached php7' => ['--disable-memcached-sasl'],
+            'memcached' => ['--disable-memcached-sasl'],
             'redis' => [],
             'xdebug' => [],
             'ldap' => ['--with-libdir=lib/x86_64-linux-gnu'],
         ];
 
-        self::$OPTIONS = ['--with-libdir=lib/x86_64-linux-gnu', '--with-gd=shared', '--enable-gd-natf', '--with-jpeg-dir=/usr', '--with-png-dir=/usr'];
+        self::$OPTIONS = [
+            '--with-libdir=lib/x86_64-linux-gnu',
+            '--with-gd=shared',
+            '--enable-gd-natf',
+            '--with-jpeg-dir=/usr',
+            '--with-png-dir=/usr'
+        ];
 
         self::$VERSIONS = [
-            '5.6' => [
-                'variants' => self::$VARIANTS,
-                'extensions' => self::$EXTENSIONS,
-                'options' => self::$OPTIONS],
-            '7.0' => [
+//            '5.6' => [
+//                'alias' => '5.6',
+//                'variants' => self::$VARIANTS,
+//                'extensions' => self::$EXTENSIONS,
+//                'options' => self::$OPTIONS
+//            ],
+            '7.0.19' => [
+                'alias' => '7.0',
                 'variants' => self::$VARIANTS,
                 'extensions' => self::$PHP_7_EXTENSIONS,
-                'options' => self::$OPTIONS]];
+                'options' => self::$OPTIONS
+            ],
+            '7.1' => [
+                'alias' => '7.1',
+                'variants' => self::$VARIANTS,
+                'extensions' => self::$PHP_7_EXTENSIONS,
+                'options' => self::$OPTIONS
+            ]
+        ];
     }
 
     public function generateScript()
@@ -83,17 +101,17 @@ class PhpInstaller
         $this->cmd('source ${SIMPLECI_HOME}/.phpbrew/bashrc');
 
         foreach (self::$VERSIONS as $version => $versionConf) {
-            $this->installPhp($version, $versionConf['variants'], $versionConf['options']);
-            $this->cmd(sprintf('phpbrew switch %s', $version));
+            $this->installPhp($version, $versionConf['alias'], $versionConf['variants'], $versionConf['options']);
+            $this->cmd(sprintf('phpbrew switch %s', $versionConf['alias']));
             $this->cmd('mkdir -p $(phpbrew path config-scan)');
             $this->installExtensions($versionConf['extensions']);
             $this->postSetup($versionConf['variants']);
-            $this->clean($version);
+            $this->clean($versionConf['alias']);
             $this->cmd();
         }
     }
 
-    private function installPhp($version, $variants, $options)
+    private function installPhp($version, $versionAlias, $variants, $options)
     {
         $variantArg = implode(' ', array_map(function ($ext) {
             return '+' . $ext;
@@ -105,7 +123,7 @@ class PhpInstaller
         }
 
         $installCmd = sprintf('phpbrew install -j $(nproc) %s as %s %s %s',
-            $version, $version, $variantArg, $optionsArg);
+            $version, $versionAlias, $variantArg, $optionsArg);
         $this->cmd($installCmd);
     }
 
@@ -138,7 +156,9 @@ class PhpInstaller
 
     private function clean($version)
     {
-        $this->cmd(sprintf('phpbrew clean %s', $version));
+        $this->cmd(sprintf('phpbrew clean --all %s', $version));
+        $this->cmd('rm -r $(phpbrew path dist)');
+        $this->cmd('mkdir $(phpbrew path dist)');
     }
 
 

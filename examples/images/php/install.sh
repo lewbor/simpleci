@@ -5,7 +5,6 @@ export DEBIAN_FRONTEND=noninteractive
 echo 'APT::Install-Recommends "false";' >> /etc/apt/apt.conf.d/30install-suggests
 echo 'APT::Install-Suggests "false";' >> /etc/apt/apt.conf.d/30install-suggests
 
-apt-get -qq update
 apt-get -y -q install sudo curl netcat git git-core wget pv socat \
     hashdeep openssh-client openssh-server unzip apt-transport-https \
     libbz2-dev libmcrypt-dev libtidy-dev libxml2-dev libjpeg-dev libmemcached-dev \
