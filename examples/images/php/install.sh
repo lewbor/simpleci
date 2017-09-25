@@ -11,11 +11,15 @@ apt-get -y -q install sudo curl netcat git git-core wget pv socat \
     libicu-dev libreadline-dev libxslt1-dev libpq-dev libldap2-dev libfreetype6-dev \
     libcurl3 libcurl3-gnutls libcurl4-openssl-dev libssl-dev libfontconfig1-dev \
     software-properties-common build-essential \
-    nodejs npm default-jdk \
+    default-jdk \
     php7.0-common php7.0-cli php7.0-dev php7.0-curl php-pear \
     re2c bison chrpath mysql-client \
     xvfb x11-utils xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic \
     chromium-browser ffmpeg tmux
+
+# Install nodejs
+curl -sL https://deb.nodesource.com/setup_8.x | bash -
+apt-get install -y nodejs
 
 # Install yarn
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
@@ -23,7 +27,6 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.lis
 apt-get -qq update
 apt-get install yarn
 
-ln -s /usr/bin/nodejs /usr/bin/node
 rm -rf /var/lib/apt/lists/*
 
 # Install docker client for building docker images

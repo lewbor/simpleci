@@ -50,15 +50,6 @@ class PhpInstaller
         ];
 
         self::$EXTENSIONS = [
-            'memcache' => [],
-            'memcached' => ['--disable-memcached-sasl'],
-            'mongo' => [],
-            'redis' => [],
-            'xdebug' => [],
-            'ldap' => ['--with-libdir=lib/x86_64-linux-gnu'],
-        ];
-
-        self::$PHP_7_EXTENSIONS = [
             'memcached' => ['--disable-memcached-sasl'],
             'redis' => [],
             'xdebug' => [],
@@ -74,22 +65,16 @@ class PhpInstaller
         ];
 
         self::$VERSIONS = [
-//            '5.6' => [
-//                'alias' => '5.6',
-//                'variants' => self::$VARIANTS,
-//                'extensions' => self::$EXTENSIONS,
-//                'options' => self::$OPTIONS
-//            ],
-            '7.0.19' => [
+            '7.0' => [
                 'alias' => '7.0',
                 'variants' => self::$VARIANTS,
-                'extensions' => self::$PHP_7_EXTENSIONS,
+                'extensions' => self::$EXTENSIONS,
                 'options' => self::$OPTIONS
             ],
             '7.1' => [
                 'alias' => '7.1',
                 'variants' => self::$VARIANTS,
-                'extensions' => self::$PHP_7_EXTENSIONS,
+                'extensions' => self::$EXTENSIONS,
                 'options' => self::$OPTIONS
             ]
         ];
