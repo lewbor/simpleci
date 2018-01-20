@@ -13,7 +13,7 @@ gcloud compute --project ${projectName} instances create ${instanceName} \
     --zone ${zoneName} \
     --machine-type ${machineType} \
     --subnet "default" \
-    --image "ubuntu-1604-xenial-v20170919" \
+    --image "ubuntu-1604-xenial-v20180112" \
     --image-project "ubuntu-os-cloud" \
     --boot-disk-size "10" \
     --boot-disk-type "pd-ssd" \

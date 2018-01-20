@@ -1,21 +1,35 @@
-#!/bin/bash
+#!/bin/bash	
 set -o xtrace
 
 export DEBIAN_FRONTEND=noninteractive
 echo 'APT::Install-Recommends "false";' >> /etc/apt/apt.conf.d/30install-suggests
 echo 'APT::Install-Suggests "false";' >> /etc/apt/apt.conf.d/30install-suggests
 
-apt-get -y -q install sudo curl netcat git git-core wget pv socat \
-    hashdeep openssh-client openssh-server unzip apt-transport-https \
+apt-get -y -q install \
+    sudo \
+    curl \
+    netcat \
+    git \
+    git-core \
+    wget \
+    pv \
+    socat \
+    hashdeep \
+    openssh-client \
+    openssh-server \
+    unzip \
+    software-properties-common build-essential apt-transport-https \
     libbz2-dev libmcrypt-dev libtidy-dev libxml2-dev libjpeg-dev libmemcached-dev \
     libicu-dev libreadline-dev libxslt1-dev libpq-dev libldap2-dev libfreetype6-dev \
     libcurl3 libcurl3-gnutls libcurl4-openssl-dev libssl-dev libfontconfig1-dev \
-    software-properties-common build-essential \
+    libgconf-2-4 \
     default-jdk \
     php7.0-common php7.0-cli php7.0-dev php7.0-curl php-pear \
     re2c bison chrpath mysql-client \
     xvfb x11-utils xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic \
-    chromium-browser ffmpeg tmux
+    chromium-browser \
+    ffmpeg \
+    tmux
 
 # Install nodejs
 curl -sL https://deb.nodesource.com/setup_8.x | bash -

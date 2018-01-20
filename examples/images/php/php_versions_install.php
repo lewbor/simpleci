@@ -76,7 +76,13 @@ class PhpInstaller
                 'variants' => self::$VARIANTS,
                 'extensions' => self::$EXTENSIONS,
                 'options' => self::$OPTIONS
-            ]
+            ],
+            '7.2' => [
+                'alias' => '7.2',
+                'variants' => self::$VARIANTS,
+                'extensions' => self::$EXTENSIONS,
+                'options' => self::$OPTIONS
+            ],
         ];
     }
 
