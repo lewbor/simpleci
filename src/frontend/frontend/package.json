@@ -27,7 +27,7 @@
     "less-loader": "^2.2.1",
     "nunjucks": "^2.1.0",
     "nunjucks-loader": "^2.2.1",
-    "prismjs": "^1.6.0",
+    "prismjs": "^1.23.0",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.6",
     "webpack": "^1.14.0"
